@@ -1,27 +1,41 @@
 #include <iostream>
+#include <vector>
+#include <string>
 using namespace std;
 
-int main(){
-	int b = 47;
-	int num;
-	int x, y, z;
-	cout << "Choose the color number you want to input" << endl;
-	cout << "Red: 80" << endl;
-	cout << "Green: 20" << endl;
-	cout << "Yellow: 3" << endl;
-	cout << "Number: ";
-	cin >> num;
-	for(int i = 0; i < 4; i++){
-		b += 80;
-		x += b + 20;
-		y += x + 3;
-		z += y + 80;
-		cout << z << endl;
-	}
+//the function for an addition iteration with sequence 80, 20, 3, and back to 80 
+//the traffic light sequence after 47 seconds (yellow) = red (80 seconds), green (3 seconds), and yellow (20 seconds)
+void loopingAddition(int firstNum, int lastLimit){
+	vector<int> additionOrder = {80, 20, 3}; 
+	vector<string> trafficColor = {"red", "green", "yellow"};
+	int currentNum = firstNum;
+	int step = 0; //to track the position in the sequence (0, 1, 2) 
 	
-	if(150 < z < 230){
-		cout << "The traffic light color is red";
+	cout << "The addition starts from: " << firstNum << endl;
+	cout << "The addition upper limit: " << lastLimit << endl;
+	
+	while(true){
+		int additionValue = additionOrder[step % additionOrder.size()];
+		string additionColor = trafficColor[step % trafficColor.size()];
+		
+		//if the total seconds greater than the limit, it stops the loop
+		if(currentNum + additionValue > lastLimit){
+			break;
+		}
+		cout << currentNum << " + " << additionValue << " = ";
+		currentNum += additionValue;
+		cout << currentNum << ", the light color: " << additionColor << endl;
+		
+		step++;
 	}
+}
+
+int main(){
+	int lowerLimit = 47; //it starts from 47th second (yellow)
+	int upperLimit;
+	cout << "Enter a number as an upper limit: ";
+	cin >> upperLimit; //set the upper limit
+	loopingAddition(lowerLimit, upperLimit);
 	
 	return 0;
 }
